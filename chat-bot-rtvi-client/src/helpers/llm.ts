@@ -6,7 +6,7 @@ import {
   VoiceEvent,
   VoiceMessage,
 } from "..";
-import * as VoiceErrors from "./../errors";
+import * as VoiceErrors from "../errors";
 import { VoiceClientHelper, VoiceClientHelperOptions } from ".";
 
 // --- Types
