@@ -46,15 +46,15 @@ export type ActionData = {
   arguments: { name: string; value: unknown }[];
 };
 
-export type PipecatMetricsData = {
+export type AchatbotMetricsData = {
   processor: string;
   value: number;
 };
 
-export type PipecatMetrics = {
-  processing?: PipecatMetricsData[];
-  ttfb?: PipecatMetricsData[];
-  characters?: PipecatMetricsData[];
+export type AchatbotMetrics = {
+  processing?: AchatbotMetricsData[];
+  ttfb?: AchatbotMetricsData[];
+  characters?: AchatbotMetricsData[];
 };
 
 export type Transcript = {
@@ -116,7 +116,7 @@ export class VoiceMessage {
 }
 
 export class VoiceMessageMetrics extends VoiceMessage {
-  constructor(data: PipecatMetrics) {
+  constructor(data: AchatbotMetrics) {
     super(VoiceMessageType.METRICS, data, "0");
   }
 }

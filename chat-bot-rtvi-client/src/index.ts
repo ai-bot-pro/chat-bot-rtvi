@@ -35,9 +35,9 @@ export interface VoiceClientOptions {
   config?: VoiceClientConfigOption[];
 
   /**
-   * Service configuration dict for services and further customization
+   * Service configuration dict for asr,llm,tts,etc..
    */
-  config_dict?: {};
+  config_dict?: { [key: string]: unknown };
 
 
   /**
@@ -106,6 +106,7 @@ export class VoiceClient extends Client {
       transport: opts.transport,
       enableMic: opts.enableMic ?? true,
       config: opts.config || [],
+      config_dict: opts.config_dict || {},
     };
 
     super(options);

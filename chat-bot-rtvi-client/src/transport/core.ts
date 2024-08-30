@@ -33,6 +33,7 @@ export abstract class Transport {
   protected _options: VoiceClientOptions;
   protected _callbacks: VoiceEventCallbacks;
   protected _config: VoiceClientConfigOption[];
+  protected _config_dict: { [key: string]: unknown };
   protected _onMessage: (ev: VoiceMessage) => void;
   protected _state: TransportState = "idle";
 
@@ -43,6 +44,7 @@ export abstract class Transport {
     this._options = options;
     this._callbacks = options.callbacks ?? {};
     this._config = options.config ?? [];
+    this._config_dict = options.config_dict ?? {};
     this._onMessage = onMessage;
   }
 

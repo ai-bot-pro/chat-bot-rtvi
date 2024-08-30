@@ -7,7 +7,7 @@ import {
   ConfigData,
   ConfigOption,
   MessageDispatcher,
-  PipecatMetrics,
+  AchatbotMetrics,
   Transcript,
   VoiceClientConfigOption,
   VoiceClientHelper,
@@ -53,7 +53,7 @@ export type VoiceEventCallbacks = Partial<{
   onUserStartedSpeaking: () => void;
   onUserStoppedSpeaking: () => void;
 
-  onMetrics: (data: PipecatMetrics) => void;
+  onMetrics: (data: AchatbotMetrics) => void;
   onUserTranscript: (data: Transcript) => void;
   onBotTranscript: (data: string) => void;
 }>;
@@ -322,7 +322,8 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
               },
               body: JSON.stringify({
                 services: this._options.services,
-                config,
+                config_list: config,
+                config: this._options.config_dict,
                 ...this._options.customBodyParams,
               }),
               signal: this._abortController?.signal,
@@ -682,8 +683,8 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
   protected handleMessage(ev: VoiceMessage): void {
     if (ev instanceof VoiceMessageMetrics) {
       //@TODO: add to wrapped metrics
-      this.emit(VoiceEvent.Metrics, ev.data as PipecatMetrics);
-      return this._options.callbacks?.onMetrics?.(ev.data as PipecatMetrics);
+      this.emit(VoiceEvent.Metrics, ev.data as AchatbotMetrics);
+      return this._options.callbacks?.onMetrics?.(ev.data as AchatbotMetrics);
     }
 
     switch (ev.type) {

@@ -12,7 +12,7 @@ import Daily, {
 } from "@daily-co/daily-js";
 import {
   Participant,
-  PipecatMetrics,
+  AchatbotMetrics,
   Tracks,
   Transport,
   TransportStartError,
@@ -264,9 +264,9 @@ export class DailyTransport extends Transport {
         type: ev.data.type,
         data: ev.data.data,
       } as VoiceMessage);
-    } else if (ev.data.type === "pipecat-metrics") {
-      // Bubble up pipecat metrics, which don't have the "rtvi-ai" label
-      const vmm = new VoiceMessageMetrics(ev.data.metrics as PipecatMetrics);
+    } else if (ev.data.type === "chatbot-metrics") {
+      // Bubble up chatbot metrics, which don't have the "rtvi-ai" label
+      const vmm = new VoiceMessageMetrics(ev.data.metrics as AchatbotMetrics);
       this._onMessage(vmm);
     }
   }

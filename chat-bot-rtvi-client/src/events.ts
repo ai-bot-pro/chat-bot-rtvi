@@ -1,7 +1,7 @@
 import {
   BotReadyData,
   LLMFunctionCallData,
-  PipecatMetrics,
+  AchatbotMetrics,
   Transcript,
   VoiceClientConfigOption,
   VoiceMessage,
@@ -80,7 +80,7 @@ export type VoiceEvents = Partial<{
   userStoppedSpeaking: () => void;
   localAudioLevel: (level: number) => void;
 
-  metrics: (data: PipecatMetrics) => void;
+  metrics: (data: AchatbotMetrics) => void;
   userTranscript: (data: Transcript) => void;
   botTranscript: (text: string) => void;
 
