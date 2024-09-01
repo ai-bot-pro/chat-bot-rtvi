@@ -1,11 +1,13 @@
 {
   "private": true,
-  "name": "chat-bot-rtvi-client",
+  "name": "chat-bot-rtvi-client-workspace",
   "description": "chat bot RTVI ts client workspaces, chat-bot-rtvi-client is base rtvi client, chat-bot-rtvi-daily-client for daily webrtc transport",
   "version": "0.0.0",
   "workspaces": [
     "chat-bot-rtvi-client",
-    "chat-bot-rtvi-daily-client"
+    "chat-bot-rtvi-daily-client",
+    "chat-bot-rtvi-web-react",
+    "chat-bot-rtvi-web-sandbox"
   ],
   "devDependencies": {
     "@parcel/packager-ts": "2.12.0",

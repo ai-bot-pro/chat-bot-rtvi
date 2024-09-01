@@ -32,12 +32,12 @@ export enum VoiceMessageType {
 }
 
 export type ConfigData = {
-  config: VoiceClientConfigOption[];
+  config_list: VoiceClientConfigOption[];
 };
 
 export type BotReadyData = {
-  config: VoiceClientConfigOption[];
   version: string;
+  config: VoiceClientConfigOption[];
 };
 
 export type ActionData = {

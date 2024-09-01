@@ -1,6 +1,6 @@
 {
   "name": "chat-bot-rtvi-daily-client",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
@@ -30,7 +30,9 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@daily-co/daily-js": ">=0.68.0",
+    "@daily-co/daily-js": ">=0.68.0"
+  },
+  "peerDependencies": {
     "chat-bot-rtvi-client": "*"
   }
 }

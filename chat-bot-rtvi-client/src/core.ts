@@ -331,7 +331,15 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
               clearTimeout(this._handshakeTimeout);
 
               if (res.ok) {
-                return res.json();
+                return res.json().then(
+                  json_res => {
+                    if (json_res["error_code"] == 0) {
+                      return {
+                        room_url: json_res["data"]["room_url"],
+                        token: json_res["data"]["token"],
+                      }
+                    }
+                  });
               }
               return Promise.reject(res);
             });
@@ -702,7 +710,7 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
       }
       case VoiceMessageType.CONFIG: {
         const resp = this._messageDispatcher.resolve(ev);
-        this.config = (resp.data as ConfigData).config;
+        this.config = (resp.data as ConfigData).config_list;
         break;
       }
       case VoiceMessageType.ACTIONS_AVAILABLE: {

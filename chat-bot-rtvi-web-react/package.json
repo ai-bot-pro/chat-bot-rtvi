@@ -1,5 +1,5 @@
 {
-  "name": "chat-bot-rtvi-client",
+  "name": "chat-bot-rtvi-web-react",
   "version": "0.1.0",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
@@ -8,7 +8,7 @@
   "source": "src/index.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ai-bot-pro/chat-bot-rtvi-client.git"
+    "url": "git+https://github.com/ai-bot-pro/chat-bot-rtvi-web.git"
   },
   "files": [
     "dist",
@@ -18,9 +18,11 @@
   "scripts": {
     "build": "parcel build --no-cache",
     "dev": "parcel watch",
-    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.2.0",
     "@typescript-eslint/parser": "^8.2.0",
     "eslint": "9.x",
@@ -30,10 +32,11 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@types/events": "^3.0.3",
-    "deepmerge-ts": "^7.0.3",
-    "events": "^3.3.0",
-    "nanoid": "^5.0.7",
-    "typed-emitter": "^2.1.0"
+    "jotai": "^2.9.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "peerDependencies": {
+    "chat-bot-rtvi-client": "*"
   }
 }
