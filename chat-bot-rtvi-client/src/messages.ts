@@ -94,7 +94,7 @@ export class VoiceMessage {
   }
 
   static updateConfig(config: VoiceClientConfigOption[]): VoiceMessage {
-    return new VoiceMessage(VoiceMessageType.UPDATE_CONFIG, { config });
+    return new VoiceMessage(VoiceMessageType.UPDATE_CONFIG, { config_list: config });
   }
 
   static describeConfig(): VoiceMessage {

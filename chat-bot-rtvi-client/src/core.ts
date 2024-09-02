@@ -2,12 +2,12 @@ import { EventEmitter } from "events";
 import type TypedEmitter from "typed-emitter";
 
 import {
+  AchatbotMetrics,
   ActionData,
   BotReadyData,
   ConfigData,
   ConfigOption,
   MessageDispatcher,
-  AchatbotMetrics,
   Transcript,
   VoiceClientConfigOption,
   VoiceClientHelper,
@@ -358,6 +358,7 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
                 )
               );
             }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
           } catch (innerError) {
             reject(
               new VoiceErrors.StartBotError(
@@ -591,7 +592,7 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
     option: ConfigOption
   ): VoiceClientConfigOption[] {
     const serviceOptions = this.getServiceOptionsFromConfig(serviceKey);
-    if (!serviceOptions) this.config;
+    if (!serviceOptions) return this.config;
 
     const newServiceOption = {
       service: serviceKey,

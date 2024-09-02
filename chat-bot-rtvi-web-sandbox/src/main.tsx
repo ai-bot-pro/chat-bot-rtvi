@@ -18,6 +18,13 @@ const voiceClient = new DailyVoiceClient({
   },
   config: [
     {
+      service: "vad",
+      options: [
+        { name: "args", value: { stop_secs: 0.7 } },
+        { name: "tag", value: "daily_webrtc_vad_analyzer" },
+      ],
+    },
+    {
       service: "llm",
       options: [
         { name: "model", value: "llama-3.1-8b-instant" },
