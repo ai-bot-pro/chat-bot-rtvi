@@ -4,6 +4,7 @@ import {
   AchatbotMetrics,
   VoiceEvent,
   VoiceMessage,
+  Transcript,
 } from "chat-bot-rtvi-client";
 import { DailyVoiceClient } from "chat-bot-rtvi-daily-client";
 import { VoiceClientProvider } from "chat-bot-rtvi-web-react";
@@ -13,32 +14,50 @@ const voiceClient = new DailyVoiceClient({
   baseUrl: import.meta.env.VITE_BASE_URL,
   enableMic: true,
   services: {
-    llm: "groq",
+    vad: "daily",
+    asr: "deepgram",
+    llm: "together",
     tts: "edge",
   },
   config: [
     {
+      service: "pipeline",
+      options: [
+        { name: "allow_interruptions", value: false },
+        { name: "enable_metrics", value: true },
+        { name: "report_only_initial_ttfb", value: true },
+      ],
+    },
+    {
       service: "vad",
       options: [
         { name: "args", value: { stop_secs: 0.7 } },
-        { name: "tag", value: "daily_webrtc_vad_analyzer" },
+        { name: "tag", value: "silero_vad_analyzer" },
+      ],
+    },
+    {
+      service: "asr",
+      options: [
+        { name: "args", value: { language: "zh", model: "nova-2" } },
+        { name: "tag", value: "deepgram_asr_processor" },
       ],
     },
     {
       service: "llm",
       options: [
-        { name: "model", value: "llama-3.1-8b-instant" },
-        { name: "base_url", value: "https://api.groq.com/openai/v1" },
+        { name: "model", value: "Qwen/Qwen2-72B-Instruct" },
+        { name: "base_url", value: "https://api.together.xyz/v1" },
         {
           name: "messages",
           value: [
             {
               role: "system",
               content:
-                "You are a assistant called Frankie. You can ask me anything. Keep responses brief and legible. Introduce yourself first.",
+                "You are a assistant called Frankie. You can ask me anything. Keep responses brief and legible. Please communicate in Chinese",
             },
           ],
         },
+        { name: "tag", value: "openai_llm_processor" },
       ],
     },
     {
@@ -47,8 +66,8 @@ const voiceClient = new DailyVoiceClient({
         {
           name: "args",
           value: {
-            voice_name: "en-US-BrianNeural",
-            language: "en",
+            voice_name: "zh-CN-YunjianNeural",
+            language: "zh",
             gender: "Male",
           },
         },
@@ -66,7 +85,7 @@ const voiceClient = new DailyVoiceClient({
           // or claude-3-5-sonnet-20240620
           { name: "model", value: "gpt-4o" },
           {
-            name: "initial_messages",
+            name: "messages",
             value: [
               {
                 // anthropic: user; openai: system
@@ -185,6 +204,14 @@ const voiceClient = new DailyVoiceClient({
     },
     onMetrics: (data: AchatbotMetrics) => {
       console.log("[CALLBACK] Metrics:", data);
+    },
+    onUserTranscript(data: Transcript) {
+      if (data.final) {
+        console.log("[CALLBACK] User Transcript:", data.text);
+      }
+    },
+    onBotTranscript(data: string) {
+      console.log("[CALLBACK] Bot transcript:", data);
     },
   },
 });

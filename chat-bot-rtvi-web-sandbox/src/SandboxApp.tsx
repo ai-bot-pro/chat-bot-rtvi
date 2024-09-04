@@ -105,6 +105,13 @@ export const Sandbox = () => {
   );
 
   useVoiceClientEvent(
+    VoiceEvent.BotTranscript,
+    useCallback((text: string) => {
+      console.log("[EVENT] Bot transcript:", text);
+    }, [])
+  );
+
+  useVoiceClientEvent(
     VoiceEvent.BotStoppedSpeaking,
     useCallback(() => {
       console.log("[EVENT] Bot stopped speaking");
