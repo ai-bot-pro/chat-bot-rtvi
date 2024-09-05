@@ -52,6 +52,8 @@ export const Sandbox = () => {
     templateAction
   );
   const [error, setError] = useState<string | null>(null);
+  const [botTranscript, setBotTranscript] = useState<string[]>([]);
+  const [userTranscript, setUserTranscript] = useState<string[]>([]);
 
   useVoiceClientEvent(VoiceEvent.ConfigUpdated, (e) => {
     console.log("[EVENT] Config was updated: ", e);
@@ -100,6 +102,7 @@ export const Sandbox = () => {
     useCallback((transcript: Transcript) => {
       if (transcript.final) {
         console.log("[EVENT] User transcript:", transcript.text);
+        setUserTranscript((prev) => [...prev, transcript.text]);
       }
     }, [])
   );
@@ -108,9 +111,36 @@ export const Sandbox = () => {
     VoiceEvent.BotTranscript,
     useCallback((text: string) => {
       console.log("[EVENT] Bot transcript:", text);
+      setBotTranscript((prev) => [...prev, text]);
     }, [])
   );
 
+  useVoiceClientEvent(
+    VoiceEvent.UserStartedSpeaking,
+    useCallback(() => {
+      console.log("[EVENT] User started speaking");
+      //setUserTranscript((prev) => [
+      //  ...prev,
+      //  "---------------chat round " + chatRound + "-----------------",
+      //]);
+    }, [])
+  );
+  useVoiceClientEvent(
+    VoiceEvent.UserStoppedSpeaking,
+    useCallback(() => {
+      console.log("[EVENT] User stopped speaking");
+      //setUserTranscript((prev) => [
+      //  ...prev,
+      //  "--------------------------------",
+      //]);
+    }, [])
+  );
+  useVoiceClientEvent(
+    VoiceEvent.BotStartedSpeaking,
+    useCallback(() => {
+      console.log("[EVENT] Bot started speaking");
+    }, [])
+  );
   useVoiceClientEvent(
     VoiceEvent.BotStoppedSpeaking,
     useCallback(() => {
@@ -163,12 +193,22 @@ export const Sandbox = () => {
             <button
               onClick={async () => {
                 await voiceClient.disconnect();
+                setBotTranscript([]);
+                setUserTranscript([]);
               }}
             >
               Disconnect
             </button>
           ) : (
-            <button onClick={() => start()}>Connect</button>
+            <button
+              onClick={() => {
+                setBotTranscript([]);
+                setUserTranscript([]);
+                start();
+              }}
+            >
+              Connect
+            </button>
           )}
         </div>
       </header>
@@ -207,13 +247,31 @@ export const Sandbox = () => {
             <strong>Local audio gain: </strong>
             <MicMeter type={VoiceEvent.LocalAudioLevel} />
           </div>
-          {isBotConnected && (
+          <div>
+            <strong>user transcript: </strong>
+            <div className="mt-10">
+              {userTranscript.map((transcript, index) => (
+                <div key={index}>{transcript}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+        {isBotConnected && (
+          <div className={styles.card}>
             <div className="meter-wrapper">
               <strong>Bot audio gain</strong>
               <MicMeter type={VoiceEvent.RemoteAudioLevel} />
+              <div>
+                <strong>bot transcript: </strong>
+                <div className="mt-10">
+                  {botTranscript.map((transcript, index) => (
+                    <div key={index}>{transcript}</div>
+                  ))}
+                </div>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         <hr />
 

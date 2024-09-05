@@ -178,10 +178,6 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
         options?.callbacks?.onLocalAudioLevel?.(level);
         this.emit(VoiceEvent.LocalAudioLevel, level);
       },
-      onUserTranscript: (data) => {
-        options?.callbacks?.onUserTranscript?.(data);
-        this.emit(VoiceEvent.UserTranscript, data);
-      },
     };
 
     // Update options to reference wrapped callbacks

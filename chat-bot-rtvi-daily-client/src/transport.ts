@@ -11,8 +11,8 @@ import Daily, {
   DailyParticipant,
 } from "@daily-co/daily-js";
 import {
-  Participant,
   AchatbotMetrics,
+  Participant,
   Tracks,
   Transport,
   TransportStartError,
@@ -193,6 +193,7 @@ export class DailyTransport extends Transport {
       if (room && "id" in room) {
         this._expiry = room.config?.exp;
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       this.state = "error";
       throw new TransportStartError();
