@@ -329,10 +329,22 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
               if (res.ok) {
                 return res.json().then(
                   json_res => {
-                    if (json_res["error_code"] == 0) {
-                      return {
-                        room_url: json_res["data"]["room_url"],
-                        token: json_res["data"]["token"],
+                    if ("error_code" in json_res) {
+                      if (json_res["error_code"] == 0) {
+                        return {
+                          room_url: json_res["data"]["room_url"],
+                          token: json_res["data"]["token"],
+                        }
+                      }
+                    }
+                    if ("result" in json_res) {
+                      if ("error_code" in json_res["result"]) {
+                        if (json_res["result"]["error_code"] == 0) {
+                          return {
+                            room_url: json_res["result"]["data"]["room_url"],
+                            token: json_res["result"]["data"]["token"],
+                          }
+                        }
                       }
                     }
                   });

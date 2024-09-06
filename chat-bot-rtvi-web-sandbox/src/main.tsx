@@ -53,7 +53,8 @@ const voiceClient = new DailyVoiceClient({
             {
               role: "system",
               content:
-                "You are a assistant called Frankie. You can ask me anything. Keep responses brief and legible. Please communicate in Chinese",
+                //"You are a assistant called Frankie. You can ask me anything. Keep responses brief and legible. Please communicate in Chinese",
+                "我是你的老板，你是一个叫弗兰基的助理。你可以问我任何问题。保持回答简短和清晰。请用中文回答。第一句话请说：老板您好，元气满满的一天，加油！",
             },
           ],
         },
