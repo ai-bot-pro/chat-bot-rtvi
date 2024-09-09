@@ -548,6 +548,18 @@ export abstract class Client extends (EventEmitter as new () => TypedEmitter<Voi
       this.config = config;
     }
   }
+  /**
+   * Update custom body params
+   * @param object - object with the new configuration
+   */
+
+  public updateCustomBodyParams(
+    customBodyParams: object
+  ) {
+    if (this._options.customBodyParams) {
+      this._options.customBodyParams = customBodyParams;
+    }
+  }
 
   /**
    * Request bot describe the current configuration options
