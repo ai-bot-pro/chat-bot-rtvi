@@ -55,3 +55,8 @@ hr {
     margin: 0 0 15px 0;
   }
 }
+
+.video {
+  height: 100%;
+  width: 100%;
+}

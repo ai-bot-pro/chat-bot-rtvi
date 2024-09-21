@@ -5,6 +5,7 @@ import {
   useVoiceClientMediaDevices,
   useVoiceClientTransportState,
   VoiceClientAudio,
+  VoiceClientVideo,
 } from "chat-bot-rtvi-web-react";
 import ReactJson from "@microlink/react-json-view";
 import {
@@ -34,8 +35,14 @@ export const Sandbox = () => {
   const state = useVoiceClientTransportState();
   const [isBotConnected, setIsBotConnected] = useState(false);
   const [botVersion, setBotVersion] = useState<string>("---");
-  const { availableMics, selectedMic, updateMic } =
-    useVoiceClientMediaDevices();
+  const {
+    availableCams,
+    availableMics,
+    selectedCam,
+    selectedMic,
+    updateCam,
+    updateMic,
+  } = useVoiceClientMediaDevices();
   const [configUpdating, setConfigUpdating] = useState(false);
   const [actionDispatching, setActionDispatching] = useState(false);
   const [configDescription, setConfigDescription] = useState<
@@ -226,20 +233,36 @@ export const Sandbox = () => {
               </button>
             </>
           ) : (
-            <label htmlFor="mic">
-              Microphone:
-              <select
-                id="mic"
-                onChange={(ev) => updateMic(ev.currentTarget.value)}
-                value={selectedMic?.deviceId}
-              >
-                {availableMics.map((mic) => (
-                  <option key={mic.deviceId} value={mic.deviceId}>
-                    {mic.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <>
+              <label htmlFor="mic">
+                Microphone:
+                <select
+                  id="mic"
+                  onChange={(ev) => updateMic(ev.currentTarget.value)}
+                  value={selectedMic?.deviceId}
+                >
+                  {availableMics.map((mic) => (
+                    <option key={mic.deviceId} value={mic.deviceId}>
+                      {mic.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label htmlFor="cam">
+                Camera:
+                <select
+                  id="cam"
+                  onChange={(ev) => updateCam(ev.currentTarget.value)}
+                  value={selectedCam?.deviceId}
+                >
+                  {availableCams.map((cam) => (
+                    <option key={cam.deviceId} value={cam.deviceId}>
+                      {cam.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </>
           )}
         </div>
         <div className={styles.card}>
@@ -272,7 +295,16 @@ export const Sandbox = () => {
             </div>
           </div>
         )}
-
+        <div className={styles.card}>
+          <div>
+            <strong>Camera </strong>
+            <VoiceClientVideo
+              participant="local"
+              mirror={true}
+              className={styles.video}
+            />
+          </div>
+        </div>
         <hr />
 
         <div className={styles.card}>
